@@ -3,15 +3,19 @@ from app_habit.models import Habit
 from app_habit.serializers import HabitCreateSerializer, HabitViewSerializer, HabitDeleteSerializer, \
     HabitUpdateSerializer
 from app_habit.permissions import Owner
+from rest_framework.permissions import IsAuthenticated
+
 
 
 class HabitCreateView(generics.CreateAPIView):
     serializer_class = HabitCreateSerializer
+    permission_classes = [IsAuthenticated]
+
 
 
 class HabitListView(generics.ListAPIView):  # for testing
     serializer_class = HabitViewSerializer
-
+    
     def get_queryset(self):
         queryset = Habit.objects.all()
         queryset = queryset.filter(is_public=True)

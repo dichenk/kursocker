@@ -18,9 +18,8 @@ class HabitValidator:
         if binded_habit is not None and reward != '':
             raise serializers.ValidationError(
                 'исключается одновременный выбор связанной привычки и указания вознаграждения')
-        if periodic_habit > 7:
-            raise serializers.ValidationError('периодичность не может быть более 7 дней, то есть привычку нельзя '
-                                              'выполнять больше, чем раз в неделю')
+        if periodic_habit is None or periodic_habit > 7:
+            raise serializers.ValidationError('периодичность должна быть не менее 1 и не более 7 дней')
         if time_for_finishing > 120:
             raise serializers.ValidationError('время выполнения должно быть не больше 120 секунд')
         if binded_habit == '' and reward == '':

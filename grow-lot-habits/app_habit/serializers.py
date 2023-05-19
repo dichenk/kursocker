@@ -3,6 +3,7 @@ from app_habit.models import Habit
 from app_habit.validators import HabitValidator
 
 
+
 class HabitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habit

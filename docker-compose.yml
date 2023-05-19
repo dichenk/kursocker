@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - migration
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  migration:
+    image: postgres
+    command: python manage.py migrate --noinput
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+
+volumes:
+  db:
+    driver: local

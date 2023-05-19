@@ -13,9 +13,9 @@ class Habit(models.Model):
     action = models.CharField(max_length=128, default='', verbose_name='action')
     pleasure_habit = models.BooleanField(default=False, verbose_name='pleasure habit')
     binded_habit = models.CharField(max_length=128, default=None, verbose_name='binded habit', null=True, blank=True)
-    periodic_habit = models.PositiveSmallIntegerField(default=7, verbose_name='periodic habit')
+    periodic_habit = models.PositiveSmallIntegerField(default=0, verbose_name='periodic habit', null=True, blank=True)
     reward = models.CharField(max_length=128, default=None, verbose_name='reward', null=True, blank=True)
-    time_for_finishing = models.PositiveSmallIntegerField(default=1, verbose_name='time for finishing')
+    time_for_finishing = models.PositiveSmallIntegerField(default=0, verbose_name='time for finishing', null=True, blank=True)
     is_public = models.BooleanField(default=False, verbose_name='public or not')
     date_notification = models.DateField(auto_now=False, auto_now_add=False, verbose_name='date_notification', null=True, blank=True)
 

@@ -13,10 +13,10 @@ def read_db(tg_id, email):  # записывает в бд telegram id, чтоб
     sql = f"UPDATE app_custom_user_customuser SET tg_id = \'{tg_id}\' WHERE email = \'{email}\'"
     try:
         conn = psycopg2.connect(
-            database="tele_habit",
-            host="localhost",
-            user="oleg",
-            password="12345",
+            database="postgres",
+            host="db",
+            user="postgres",
+            password="postgres",
             port="5432"
         )
         cur = conn.cursor()
@@ -51,10 +51,10 @@ def check_id(tg_id):  # проверяет, записан ли telegram id в �
     sql = f"SELECT * FROM app_custom_user_customuser WHERE tg_id = \'{tg_id}\'"
     try:
         conn = psycopg2.connect(
-            database="tele_habit",
-            host="localhost",
-            user="oleg",
-            password="12345",
+            database="postgres",
+            host="db",
+            user="postgres",
+            password="postgres",
             port="5432"
         )
         cur = conn.cursor()
@@ -72,10 +72,10 @@ def make_notification():
     sql_update3 = f"UPDATE app_habit_habit SET date_notification=CURRENT_DATE+periodic_habit WHERE date_notification=CURRENT_DATE and time<=CURRENT_TIME" # меняем дату уведомления (в соответствии с периодичностью) для всех, кому разослали уведомления
     try:
         conn = psycopg2.connect(
-            database="tele_habit",
-            host="localhost",
-            user="oleg",
-            password="12345",
+            database="postgres",
+            host="db",
+            user="postgres",
+            password="postgres",
             port="5432"
         )
         cur = conn.cursor()

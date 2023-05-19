@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,13 @@ SECRET_KEY = 'django-insecure-9z79g9gix$h5pll-a2-t^snfr-@b=_mzwcrnphl(5*8bb+#u40
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0"]
+
+if os.environ.get("ALLOWED_HOSTS") is not None:
+    try:
+        ALLOWED_HOSTS += os.environ.get("ALLOWED_HOSTS").split(",")
+    except Exception as e:
+        print("Cant set ALLOWED_HOSTS, using default instead")
 
 # Application definition
 
@@ -83,11 +90,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tele_habit',
-        'HOST': 'localhost',
+        'NAME': 'postgres',
+        'HOST': 'db',
         'PORT': 5432,
-        'USER': 'oleg',
-        'PASSWORD': 12345,
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
     },
 }
 
@@ -139,10 +146,10 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ]
+    )
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated'
+    # ]
 }
 
 # Format string for displaying run time timestamps in the Django admin site. The default
